@@ -20,3 +20,10 @@ export const serverError = (): IResponse => {
     body: { message: 'Server Error' }
   }
 }
+
+export const badRequest = (message?: string): IResponse => {
+  return {
+    status: 400,
+    body: { message }
+  }
+}

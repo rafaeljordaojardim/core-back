@@ -4,16 +4,16 @@ import * as Joi from 'joi'
 export function requestValidator (req: Request, res: Response, next: NextFunction): any {
   try {
     const schema = Joi.object({
-      firstName: Joi.string().required(),
-      lastName: Joi.string().required(),
-      email: Joi.string().min(4).max(100).email().required(),
-      password: Joi.string().required(),
+      firstName: Joi.string().required().error(new Error('firstName is required')),
+      lastName: Joi.string().required().error(new Error('lastName is required')),
+      email: Joi.string().min(4).max(100).email().required().error(new Error('email is required')),
+      password: Joi.string().required().error(new Error('password is required')),
       status: Joi.boolean().default(true)
     })
     Joi.assert(req.body, schema)
     return next()
   } catch (error) {
-    console.error(error)
-    return next(error)
+    console.error(`Error create user validator: ${String(error)}`)
+    return res.status(400).json({ message: String(error) })
   }
 }
