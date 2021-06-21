@@ -12,7 +12,7 @@ app.use('/api', Routers)
 // eslint-disable-next-line no-void
 void sequelize.authenticate().then(async () => {
   app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Listening at http://localhost:${port}`)
   })
 }).catch((error) => {
   console.log(`Error connecting with database ${error}`)

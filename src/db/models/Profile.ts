@@ -1,16 +1,12 @@
-import { Table, Column, Model, BelongsToMany, BelongsTo } from 'sequelize-typescript'
-import { UserDb } from '.'
-import { Action } from './Action'
-import { ActionProfile } from './ActionProfile'
+import { Table, Column, Model, BelongsToMany } from 'sequelize-typescript'
+import { ActionDb } from './Action'
+import { ActionProfileDb } from './ActionProfile'
 
 @Table({ tableName: 'profiles' })
-export class Profile extends Model {
-  @BelongsToMany(() => Action, () => ActionProfile)
-  actions: Action[]
+export class ProfileDb extends Model {
+  @BelongsToMany(() => ActionDb, () => ActionProfileDb)
+  actions: ActionDb[]
 
   @Column
   name: string
-
-  @BelongsTo(() => UserDb, 'profileId')
-  user: UserDb
 }

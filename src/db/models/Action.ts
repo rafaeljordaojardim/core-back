@@ -1,14 +1,14 @@
 import { Table, Column, Model, BelongsToMany } from 'sequelize-typescript'
-import { Profile, ActionProfile } from '.'
+import { ProfileDb, ActionProfileDb } from '.'
 
 @Table({ tableName: 'actions' })
-export class Action extends Model {
+export class ActionDb extends Model {
   @Column
   name: string
 
   @Column
   actionNumber: number
 
-  @BelongsToMany(() => Profile, () => ActionProfile)
-  profiles: Profile[]
+  @BelongsToMany(() => ProfileDb, () => ActionProfileDb)
+  profiles: ProfileDb[]
 }

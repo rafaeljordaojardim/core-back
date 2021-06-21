@@ -1,15 +1,15 @@
 import { Table, Column, Model, HasMany } from 'sequelize-typescript'
 import { UserDb } from '.'
-import { Location } from './Location'
+import { LocationDb } from './Location'
 
 @Table({ tableName: 'sectors' })
-export class Sector extends Model {
+export class SectorDb extends Model {
   @Column
   name: string
 
   @HasMany(() => UserDb)
   users: UserDb[]
 
-  @HasMany(() => Location)
+  @HasMany(() => LocationDb)
   locations: Location[]
 }

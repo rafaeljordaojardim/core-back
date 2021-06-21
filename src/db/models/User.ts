@@ -1,6 +1,6 @@
 import { Table, Column, Model, ForeignKey, HasOne } from 'sequelize-typescript'
-import { Profile } from './Profile'
-import { Sector } from './Sector'
+import { ProfileDb } from './Profile'
+import { SectorDb } from './Sector'
 
 @Table({ tableName: 'users' })
 export class UserDb extends Model {
@@ -23,17 +23,17 @@ export class UserDb extends Model {
   @Column
   bossId: number
 
-  @ForeignKey(() => Profile)
+  @ForeignKey(() => ProfileDb)
   @Column
   profileId: number
 
-  @ForeignKey(() => Sector)
+  @ForeignKey(() => SectorDb)
   @Column
   sectorId: number
 
-  @HasOne(() => Profile, 'profileId')
-  profile: Profile
+  @HasOne(() => ProfileDb, 'id')
+  profile: ProfileDb
 
-  @HasOne(() => Sector, 'sectorId')
-  sector: Sector
+  @HasOne(() => SectorDb, 'id')
+  sector: SectorDb
 }

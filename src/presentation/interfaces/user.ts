@@ -3,5 +3,8 @@ export interface IUser {
   lastName: string
   email: string
   password: string
+  profileId: number
+  sectorId: number
   status?: boolean
+  bossId?: number
 }

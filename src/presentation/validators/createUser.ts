@@ -8,7 +8,10 @@ export function requestValidator (req: Request, res: Response, next: NextFunctio
       lastName: Joi.string().required().error(new Error('lastName is required')),
       email: Joi.string().min(4).max(100).email().required().error(new Error('email is required')),
       password: Joi.string().required().error(new Error('password is required')),
-      status: Joi.boolean().default(true)
+      status: Joi.boolean().default(true),
+      bossId: Joi.number().optional(),
+      profileId: Joi.number().required(),
+      sectorId: Joi.number().required()
     })
     Joi.assert(req.body, schema)
     return next()

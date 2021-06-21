@@ -1,13 +1,13 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
-import { Action, ActionProfile, Location, Profile, Sector, UserDb } from '.'
+import { ActionDb, ActionProfileDb, LocationDb, ProfileDb, SectorDb, UserDb } from '.'
 import database from '../config/database'
 
 const models = [
-  Action,
-  ActionProfile,
-  Location,
-  Profile,
-  Sector,
+  ActionDb,
+  ActionProfileDb,
+  LocationDb,
+  ProfileDb,
+  SectorDb,
   UserDb
 ]
 

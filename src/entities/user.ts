@@ -1,4 +1,6 @@
 import { UserDb } from '../db/models'
+import { Profile } from './profile'
+import { Sector } from './sector'
 
 export class User {
   public id?: number
@@ -9,6 +11,8 @@ export class User {
   public profileId?: number
   public sectorId?: number
   public bossId?: number
+  public sector?: Sector
+  public profile?: Profile
 
   public static fromDbModel (userDb: UserDb): User {
     const user = new User()
@@ -17,10 +21,9 @@ export class User {
     user.lastName = userDb.lastName
     user.email = userDb.email
     user.status = userDb.status
-    user.profileId = userDb.profileId
-    user.sectorId = userDb.sectorId
     user.bossId = userDb.bossId
-
+    user.sector = Sector.convertFromDb(userDb.sector)
+    user.profile = Profile.convertFromDb(userDb.profile)
     return user
   }
 }

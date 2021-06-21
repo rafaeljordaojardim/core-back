@@ -1,12 +1,12 @@
 import { Table, Column, Model, ForeignKey } from 'sequelize-typescript'
-import { Sector } from './Sector'
+import { SectorDb } from './Sector'
 
 @Table({ tableName: 'locations' })
-export class Location extends Model {
+export class LocationDb extends Model {
   @Column
   name: string
 
-  @ForeignKey(() => Sector)
+  @ForeignKey(() => SectorDb)
   @Column
   sectorId: number
 }
