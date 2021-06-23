@@ -1,4 +1,4 @@
-import { Table, Column, Model, ForeignKey, HasOne } from 'sequelize-typescript'
+import { Table, Column, Model, ForeignKey, BelongsTo, HasOne } from 'sequelize-typescript'
 import { ProfileDb } from './Profile'
 import { SectorDb } from './Sector'
 
@@ -36,4 +36,7 @@ export class UserDb extends Model {
 
   @HasOne(() => SectorDb, 'id')
   sector: SectorDb
+
+  @BelongsTo(() => UserDb, 'bossId')
+  boss: UserDb
 }
