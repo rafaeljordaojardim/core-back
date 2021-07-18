@@ -13,6 +13,9 @@ export class User {
   public sectorId?: number
   public bossId?: number
   public sector?: Sector
+  public sectorName?: string
+  public bossName?: string
+  public profileName?: string
   public profile?: Profile
   public boss?: User
 

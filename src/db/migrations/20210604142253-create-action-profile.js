@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      actionId: {
+      action_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'actions', // name of Target model
@@ -19,7 +19,7 @@ module.exports = {
         onDelete: 'CASCADE',
         allowNull: false
       },
-      profileId: {
+      profile_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'profiles', // name of Target model

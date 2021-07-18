@@ -20,15 +20,15 @@ export class UserDb extends Model {
   status: boolean
 
   @ForeignKey(() => UserDb)
-  @Column
+  @Column({ field: 'boss_id' })
   bossId: number
 
   @ForeignKey(() => ProfileDb)
-  @Column
+  @Column({ field: 'profile_id' })
   profileId: number
 
   @ForeignKey(() => SectorDb)
-  @Column
+  @Column({ field: 'sector_id' })
   sectorId: number
 
   @HasOne(() => ProfileDb, 'id')

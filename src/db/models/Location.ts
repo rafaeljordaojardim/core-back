@@ -7,6 +7,6 @@ export class LocationDb extends Model {
   name: string
 
   @ForeignKey(() => SectorDb)
-  @Column
+  @Column({ field: 'sector_id' })
   sectorId: number
 }
