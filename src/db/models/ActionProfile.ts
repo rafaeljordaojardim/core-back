@@ -10,4 +10,10 @@ export class ActionProfileDb extends Model {
   @ForeignKey(() => ProfileDb)
   @Column({ field: 'profile_id' })
   profileId: number
+
+  @Column({ field: 'created_at' })
+  createdAt: Date
+
+  @Column({ field: 'updated_at' })
+  updatedAt: Date
 }

@@ -4,10 +4,10 @@ import { SectorDb } from './Sector'
 
 @Table({ tableName: 'users' })
 export class UserDb extends Model {
-  @Column
+  @Column({ field: 'first_name' })
   firstName: string
 
-  @Column
+  @Column({ field: 'last_name' })
   lastName: string
 
   @Column
@@ -39,4 +39,10 @@ export class UserDb extends Model {
 
   @BelongsTo(() => UserDb, 'bossId')
   boss: UserDb
+
+  @Column({ field: 'created_at' })
+  createdAt: Date
+
+  @Column({ field: 'updated_at' })
+  updatedAt: Date
 }

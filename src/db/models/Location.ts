@@ -9,4 +9,10 @@ export class LocationDb extends Model {
   @ForeignKey(() => SectorDb)
   @Column({ field: 'sector_id' })
   sectorId: number
+
+  @Column({ field: 'created_at' })
+  createdAt: Date
+
+  @Column({ field: 'updated_at' })
+  updatedAt: Date
 }

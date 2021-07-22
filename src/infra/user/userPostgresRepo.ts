@@ -42,13 +42,17 @@ export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, I
   public async get (): Promise<User[] | undefined> {
     // return await UserDb.findAll({
     // }).then((users) => users.map(user => User.fromDbModel(user)))
-    const query = `SELECT *, pr.name as profileName, sc.* FROM users AS u 
-    LEFT JOIN profiles AS pr ON pr.id = u.profile_id
-    LEFT JOIN sectors AS sc ON sc.id = u.sector_id`
+    const query = `SELECT u.*, 
+    pr.name as profile_name, pr.id as profile_id,
+    sc.name as sector_name, sc.id as sector_id,
+    us.first_name as boss_first_name, us.id as boss_id
+    FROM users AS u 
+    INNER JOIN profiles AS pr ON pr.id = u.profile_id
+    INNER JOIN sectors AS sc ON sc.id = u.sector_id
+    LEFT JOIN users AS us ON us.id = u.boss_id`
     const users = await UserDb.sequelize?.query(query)
     if (users != null) {
-      console.log(users[0])
-      return users[0].map(user => User.fromDbModel(user as UserDb))
+      return users[0].map(user => User.convertFromRawQuery(user))
     }
   }
 }

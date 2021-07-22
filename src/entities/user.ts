@@ -51,4 +51,69 @@ export class User {
     boss.email = user.email
     return boss
   }
+
+  public static convertFromRawQuery (row: any): User {
+    const user = new User()
+    if (row.profile_name != null) {
+      user.profileName = row.profile_name
+    }
+
+    if (row.first_name != null) {
+      user.firstName = row.first_name
+    }
+
+    if (row.last_name != null) {
+      user.lastName = row.last_name
+    }
+
+    if (row.email != null) {
+      user.email = row.email
+    }
+
+    if (row.status != null) {
+      user.status = row.status
+    }
+
+    if (row.status != null) {
+      user.status = row.status
+    }
+
+    if (row.status != null) {
+      user.status = row.status
+    }
+
+    if (row.status != null) {
+      user.status = row.status
+    }
+
+    if (row.sector_name != null) {
+      user.sectorName = row.sector_name
+    }
+
+    if (row.boss_first_name != null) {
+      user.bossName = row.boss_first_name
+    }
+
+    if (row.boss_first_name != null) {
+      user.bossName = row.boss_first_name
+    }
+
+    if (row.boss_id != null) {
+      user.bossId = row.boss_id
+    }
+
+    if (row.profile_id != null) {
+      user.profileId = row.profile_id
+    }
+
+    if (row.sector_id != null) {
+      user.sectorId = row.sector_id
+    }
+
+    if (row.id != null) {
+      user.id = row.id
+    }
+
+    return user
+  }
 }

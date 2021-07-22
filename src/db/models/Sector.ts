@@ -12,4 +12,10 @@ export class SectorDb extends Model {
 
   @HasMany(() => LocationDb)
   locations: Location[]
+
+  @Column({ field: 'created_at' })
+  createdAt: Date
+
+  @Column({ field: 'updated_at' })
+  updatedAt: Date
 }
