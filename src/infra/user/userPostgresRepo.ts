@@ -5,6 +5,7 @@ import { IGetUsersRepo } from '../../data/interfaces/getUsersRepo'
 import { ActionDb, ProfileDb, SectorDb, UserDb } from '../../db/models'
 import { User } from '../../entities/user'
 import { IUser } from '../../presentation/interfaces/user'
+import { makeGetUserQuery } from '../../utils/common'
 
 export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, IGetUsersRepo, IGetUserByIdRepo {
   public async getById (id: number): Promise<User | undefined> {
@@ -28,28 +29,15 @@ export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, I
   }
 
   public async getByEmail (email: string): Promise<User | undefined> {
-    const user = await UserDb.findOne({
-      include: [
-        { model: SectorDb },
-        { model: ProfileDb, include: [{ model: ActionDb }] }],
-      where: { email }
-    })
+    const query = makeGetUserQuery(email)
+    const [user] = await UserDb.sequelize?.query(query) as User[]
     if (user != null) {
-      return User.fromDbModel(user)
+      return User.convertFromRawQuery(user[0])
     }
   }
 
   public async get (): Promise<User[] | undefined> {
-    // return await UserDb.findAll({
-    // }).then((users) => users.map(user => User.fromDbModel(user)))
-    const query = `SELECT u.*, 
-    pr.name as profile_name, pr.id as profile_id,
-    sc.name as sector_name, sc.id as sector_id,
-    us.first_name as boss_first_name, us.id as boss_id
-    FROM users AS u 
-    INNER JOIN profiles AS pr ON pr.id = u.profile_id
-    INNER JOIN sectors AS sc ON sc.id = u.sector_id
-    LEFT JOIN users AS us ON us.id = u.boss_id`
+    const query = makeGetUserQuery()
     const users = await UserDb.sequelize?.query(query)
     if (users != null) {
       return users[0].map(user => User.convertFromRawQuery(user))

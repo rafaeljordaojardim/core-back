@@ -27,12 +27,12 @@ export class User {
     user.name = `${user.firstName.trim()} ${user.lastName.trim()}`
     user.email = userDb.email
     user.status = userDb.status
-    user.bossId = userDb.boss == null ? userDb.bossId : undefined
-    user.sectorId = userDb.sector == null ? userDb.sectorId : undefined
-    user.profileId = userDb.profile == null ? userDb.profileId : undefined
-    user.sector = userDb.sector != null ? Sector.convertFromDb(userDb.sector) : undefined
-    user.profile = userDb.profile != null ? Profile.convertFromDb(userDb.profile) : undefined
-    user.boss = userDb.boss != null ? User.convertToReturn(userDb.boss) : undefined
+    user.bossId = userDb.bossId
+    user.sectorId = userDb.sectorId
+    user.profileId = userDb.profileId
+    user.sectorName = userDb.sector != null ? userDb.sector.name : undefined
+    user.profileName = userDb.profile != null ? userDb.profile.name : undefined
+    user.bossName = userDb.boss != null ? `${userDb.boss.firstName} ${userDb.boss.lastName}` : undefined
     return user
   }
 

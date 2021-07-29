@@ -34,8 +34,7 @@ export const makeCreateUser = (): IController => {
 export const makeGetUserByEmail = (): IController => {
   const getUserByEmailRepo: IGetUserByEmailRepo = new UserPostgresRepo()
   const dbGetUserByEmail = new DBGetUserByEmail(getUserByEmailRepo)
-  const fillUserWithAssociations = makeFillUserWithAssociations()
-  return new GetUserByEmailController(dbGetUserByEmail, fillUserWithAssociations)
+  return new GetUserByEmailController(dbGetUserByEmail)
 }
 
 export const makeGetUsers = (): IController => {
