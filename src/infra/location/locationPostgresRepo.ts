@@ -1,10 +1,20 @@
 import { ICreateLocationRepo } from '../../data/interfaces/createLocationRepo'
 import { IGetLocationRepo } from '../../data/interfaces/getLocationRepo'
+import { IUpdateLocationRepo } from '../../data/interfaces/updateLocationRepo'
 import { LocationDb } from '../../db/models'
+import { IUpdateLocationParams } from '../../domain/location/use-cases'
 import { Location } from '../../entities/location'
 import { LoggerThrow } from '../../utils/loggerThrow'
 
-export class LocationPostgresRepo implements ICreateLocationRepo, IGetLocationRepo {
+export class LocationPostgresRepo implements ICreateLocationRepo, IGetLocationRepo, IUpdateLocationRepo {
+  public async update (id: number, body: IUpdateLocationParams): Promise<Location> {
+    const [, [userUpdated]] = await LocationDb.update({ ...body }, {
+      where: { id },
+      returning: true
+    })
+    return Location.convertFromDb(userUpdated)
+  }
+
   public async get (id?: number): Promise<Location | Location[]> {
     if (id != null) {
       const location = await LocationDb.findByPk(id)

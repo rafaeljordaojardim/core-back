@@ -1,12 +1,13 @@
+
 import { Request, Response, NextFunction } from 'express'
 import * as Joi from 'joi'
 
-export function createLocationValidator (req: Request, res: Response, next: NextFunction): any {
+export function updateLocationValidator (req: Request, res: Response, next: NextFunction): any {
   try {
     const schema = Joi.object({
-      name: Joi.string().required().error(new Error('name is required')),
-      sectorId: Joi.number().required().error(new Error('sectorId is required'))
-    })
+      name: Joi.string().optional(),
+      sectorId: Joi.number().optional()
+    }).unknown(false)
     Joi.assert(req.body, schema)
     return next()
   } catch (error) {
