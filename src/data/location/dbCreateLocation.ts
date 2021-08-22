@@ -11,7 +11,7 @@ export class DBCreateLocation implements ICreateLocation {
   ) {}
 
   public async create (name: string, sectorId: number): Promise<Location> {
-    const sector = await this.getSectorById.get(sectorId)
+    const sector = await this.getSectorById.getById(sectorId)
     const location = await this.createLocation.create(name, sectorId)
     location.sectorName = sector?.name
     location.sectorId = sectorId

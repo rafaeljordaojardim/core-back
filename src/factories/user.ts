@@ -1,20 +1,23 @@
-import { ICreateUserRepo } from '../data/interfaces/createUserRepo'
-import { IGetProfileByIdRepo } from '../data/interfaces/getProfileByIdRepo'
-import { IGetSectorByIdRepo } from '../data/interfaces/getSectorByIdRepo'
-import { IGetUserByEmailRepo } from '../data/interfaces/getUserByEmailRepo'
-import { IGetUserByIdRepo } from '../data/interfaces/getUserByIdRepo'
-import { IGetUsersRepo } from '../data/interfaces/getUsersRepo'
-import { DBCreateUser } from '../data/user/dbCreateUser'
-import { DBGetUserByEmail } from '../data/user/dbGetUserByEmail'
-import { DBGetUsers } from '../data/user/dbGetUsers'
-import { FillUserWithAssociations } from '../data/user/fillUserWithAssociations'
+import {
+  ICreateUserRepo,
+  IGetProfileByIdRepo,
+  IGetSectorByIdRepo,
+  IGetUserByEmailRepo,
+  IGetUserByIdRepo,
+  IGetUsersRepo,
+  IUpdateUserRepo
+} from '../data/interfaces/'
+import { DBCreateUser, DBGetUserByEmail, DBGetUsers, DBUpdateUser, FillUserWithAssociations } from '../data/user/'
 import { IFillUserWithAssociations } from '../domain/user/use-cases/fillUserWithAssociations'
 import { ProfilePostgresRepo } from '../infra/profile/profilePostgresRepo'
 import { SectorPostgresRepo } from '../infra/sector/sectorPostgresRepo'
 import { UserPostgresRepo } from '../infra/user/userPostgresRepo'
-import { CreateUserController } from '../presentation/controllers/user/createUser'
-import { GetUserByEmailController } from '../presentation/controllers/user/getUserByEmail'
-import { GetUsersController } from '../presentation/controllers/user/getUsers'
+import {
+  CreateUserController,
+  GetUserByEmailController,
+  GetUsersController,
+  UpdateUserController
+} from '../presentation/controllers/user'
 import { IController } from '../presentation/interfaces/controller'
 
 export const makeFillUserWithAssociations = (): IFillUserWithAssociations => {
@@ -26,9 +29,11 @@ export const makeFillUserWithAssociations = (): IFillUserWithAssociations => {
 
 export const makeCreateUser = (): IController => {
   const createUserRepo: ICreateUserRepo = new UserPostgresRepo()
+  const getUserByEmailRepo: IGetUserByEmailRepo = new UserPostgresRepo()
+  const dbGetUserByEmail = new DBGetUserByEmail(getUserByEmailRepo)
   const dbCreateUser = new DBCreateUser(createUserRepo)
   const fillUserWithAssociations = makeFillUserWithAssociations()
-  return new CreateUserController(dbCreateUser, fillUserWithAssociations)
+  return new CreateUserController(dbCreateUser, dbGetUserByEmail, fillUserWithAssociations)
 }
 
 export const makeGetUserByEmail = (): IController => {
@@ -41,4 +46,12 @@ export const makeGetUsers = (): IController => {
   const getUsersRepo: IGetUsersRepo = new UserPostgresRepo()
   const dbGetUsers = new DBGetUsers(getUsersRepo)
   return new GetUsersController(dbGetUsers)
+}
+
+export const makeUpdateUser = (): IController => {
+  const updateUserRepo: IUpdateUserRepo = new UserPostgresRepo()
+  const dbGetUsers = new DBUpdateUser(updateUserRepo)
+  const getUserByEmailRepo: IGetUserByEmailRepo = new UserPostgresRepo()
+  const dbGetUserByEmail = new DBGetUserByEmail(getUserByEmailRepo)
+  return new UpdateUserController(dbGetUsers, dbGetUserByEmail)
 }

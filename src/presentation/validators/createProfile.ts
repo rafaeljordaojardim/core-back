@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import * as Joi from 'joi'
 
-export function requestValidator (req: Request, res: Response, next: NextFunction): any {
+export function createProfileValidator (req: Request, res: Response, next: NextFunction): any {
   try {
     const schema = Joi.object({
       name: Joi.string().required().error(new Error('name is required')),

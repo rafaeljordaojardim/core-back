@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from 'express'
 import * as Joi from 'joi'
 
-export function createSectorValidator (req: Request, res: Response, next: NextFunction): any {
+export function updateSectorValidator (req: Request, res: Response, next: NextFunction): any {
   try {
-    const schema = Joi.object({
+    const schemaBody = Joi.object({
       name: Joi.string().required().error(new Error('name is required'))
-    })
-    Joi.assert(req.body, schema)
+    }).unknown(false)
+    Joi.assert(req.body, schemaBody)
     return next()
   } catch (error) {
-    console.error(`Error create sector validator: ${String(error)}`)
+    console.error(`Error update sector validator: ${String(error)}`)
     return res.status(400).json({ message: String(error) })
   }
 }

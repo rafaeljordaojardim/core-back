@@ -2,12 +2,21 @@ import { ICreateUserRepo } from '../../data/interfaces/createUserRepo'
 import { IGetUserByEmailRepo } from '../../data/interfaces/getUserByEmailRepo'
 import { IGetUserByIdRepo } from '../../data/interfaces/getUserByIdRepo'
 import { IGetUsersRepo } from '../../data/interfaces/getUsersRepo'
+import { IUpdateUserRepo } from '../../data/interfaces/updateUserRepo'
 import { ActionDb, ProfileDb, SectorDb, UserDb } from '../../db/models'
 import { User } from '../../entities/user'
 import { IUser } from '../../presentation/interfaces/user'
 import { makeGetUserQuery } from '../../utils/common'
 
-export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, IGetUsersRepo, IGetUserByIdRepo {
+export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, IGetUsersRepo, IGetUserByIdRepo, IUpdateUserRepo {
+  public async update (id: number, body: any): Promise<User | undefined> {
+    const [, [userUpdated]] = await UserDb.update({ ...body }, {
+      where: { id },
+      returning: true
+    })
+    return User.fromDbModel(userUpdated)
+  }
+
   public async getById (id: number): Promise<User | undefined> {
     const user = await UserDb.findByPk(id, {
       include: [

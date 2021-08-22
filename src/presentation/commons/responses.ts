@@ -27,3 +27,10 @@ export const badRequest = (message?: string): IResponse => {
     body: { message }
   }
 }
+
+export const conflict = (message?: string): IResponse => {
+  return {
+    status: 409,
+    body: { message }
+  }
+}

@@ -13,7 +13,7 @@ export class FillUserWithAssociations implements IFillUserWithAssociations {
 
   public async fill (user: User): Promise<User> {
     if (user.sectorId != null) {
-      const sector = await this.getSectorById.get(user.sectorId)
+      const sector = await this.getSectorById.getById(user.sectorId)
       user.sectorName = sector?.name
     }
     if (user.profileId != null) {
