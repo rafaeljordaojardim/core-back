@@ -1,10 +1,19 @@
 import { ICreateProfileRepo } from '../../data/interfaces/createProfileRepo'
 import { IGetProfileByIdRepo } from '../../data/interfaces/getProfileByIdRepo'
+import { IUpdateProfileRepo } from '../../data/interfaces/updateProfileRepo'
 import { ActionDb, ProfileDb } from '../../db/models'
 import { Profile } from '../../entities/profile'
 import { LoggerThrow } from '../../utils/loggerThrow'
 
-export class ProfilePostgresRepo implements ICreateProfileRepo, IGetProfileByIdRepo {
+export class ProfilePostgresRepo implements ICreateProfileRepo, IGetProfileByIdRepo, IUpdateProfileRepo {
+  public async update (id: number, name: string): Promise<Profile> {
+    const [, [profileUpdated]] = await ProfileDb.update({ name }, {
+      where: { id },
+      returning: true
+    })
+    return Profile.convertFromDb(profileUpdated)
+  }
+
   public async get (id: number): Promise<Profile | undefined> {
     const profileFromDb = await ProfileDb.findByPk(id, { include: [{ model: ActionDb, as: 'actions', through: { attributes: [] } }] })
     if (profileFromDb != null) {
