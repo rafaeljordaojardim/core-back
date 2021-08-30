@@ -10,6 +10,9 @@ import { ICreateProfileRepo } from '../data/interfaces/createProfileRepo'
 import { IGetProfileByIdRepo } from '../data/interfaces'
 import { IDeleteAllActionsFromProfileRepo } from '../data/interfaces/deleteAllActionsFromProfileRepo'
 import { UpdateProfileController } from '../presentation/controllers/profile/updateProfile'
+import { ListProfilesController } from '../presentation/controllers/profile/listProfiles'
+import { DBListProfiles } from '../data/profile/dbListProfiles'
+import { IGetProfilesRepo } from '../data/interfaces/getProfilesRepo'
 
 export const makeCreateProfile = (): IController => {
   const createProfileRepo: ICreateProfileRepo = new ProfilePostgresRepo()
@@ -33,4 +36,10 @@ export const makeUpdateProfile = (): IController => {
     getProfileById
   )
   return new UpdateProfileController(dbUpdateProfile)
+}
+
+export const makeListProfiles = (): IController => {
+  const getProfilesRepo: IGetProfilesRepo = new ProfilePostgresRepo()
+  const dbListProfiles = new DBListProfiles(getProfilesRepo)
+  return new ListProfilesController(dbListProfiles)
 }

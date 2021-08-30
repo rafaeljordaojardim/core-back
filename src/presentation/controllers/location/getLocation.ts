@@ -12,7 +12,7 @@ export class ListLocationsController implements IController {
       const response = await this.listLocations.get(id)
       return created({ location: response })
     } catch (error) {
-      console.error(`Error creating location: ${String(error)}`)
+      console.error(`Error listing location: ${String(error)}`)
       return serverError()
     }
   }

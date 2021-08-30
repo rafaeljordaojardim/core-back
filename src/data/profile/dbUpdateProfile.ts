@@ -34,7 +34,7 @@ export class DBUpdateProfile implements IUpdateProfile {
       }
       await this.createActionProfile.create(id, actionsFromDb)
     }
-    const profileUpdated = await this.getProfileById.get(id)
+    const profileUpdated = await this.getProfileById.getById(id)
     if (!profileUpdated) {
       throw new Error(`Error: profile ${id} does not exist`)
     }

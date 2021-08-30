@@ -17,7 +17,7 @@ export class FillUserWithAssociations implements IFillUserWithAssociations {
       user.sectorName = sector?.name
     }
     if (user.profileId != null) {
-      const profile = await this.getProfileById.get(user.profileId)
+      const profile = await this.getProfileById.getById(user.profileId)
       user.profileName = profile?.name
     }
     if (user.bossId != null) {
