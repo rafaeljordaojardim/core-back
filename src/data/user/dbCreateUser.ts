@@ -9,7 +9,6 @@ export class DBCreateUser implements ICreateUser {
 
   public async create (user: IUser): Promise<User> {
     const userCreated = await this.createUser.create(user)
-    console.log(`Chegou no DBCreateUser ${JSON.stringify(user)}`)
     return userCreated
   }
 }

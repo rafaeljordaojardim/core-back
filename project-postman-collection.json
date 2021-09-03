@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"firstName\": \"Rafael\",\n  \"lastName\": \"Jardim\",\n  \"email\": \"hotmail.com.br\",\n  \"password\": \"1234567\",\n  \"sectorId\": 1,\n  \"profileId\": 1,\n  \"bossId\": 3\n}",
+							"raw": "{\n \"firstName\": \"Rafael\",\n  \"lastName\": \"gustavo\",\n  \"email\": \"gustavo1@hotmail.com.br\",\n  \"password\": \"1234567\",\n  \"sectorId\": 1,\n  \"profileId\": 2,\n  \"bossId\": 3\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -155,7 +155,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"testando changed\"\n}",
+							"raw": "{\n    \"name\": \"tirando nulo\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -163,7 +163,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/profiles/1",
+							"raw": "http://localhost:3000/api/v1/profiles/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -173,7 +173,51 @@
 								"api",
 								"v1",
 								"profiles",
-								"1"
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all profiles (normal)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/profiles/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all profiles (custom)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/profiles/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"custom"
 							]
 						}
 					},

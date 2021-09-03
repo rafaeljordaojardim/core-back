@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { IGetProfile } from '../../domain/profile/use-cases/getProfile'
+import { IGetProfiles } from '../../domain/profile/use-cases/getProfiles'
 import { Profile } from '../../entities/profile'
 import { IGetProfilesRepo } from '../interfaces/getProfilesRepo'
 
-export class DBListProfiles implements IGetProfile {
+export class DBListProfiles implements IGetProfiles {
   constructor (
     private readonly getProfiles: IGetProfilesRepo
   ) {}

@@ -1,5 +1,5 @@
 import { Profile } from '../../../entities/profile'
 
-export interface IGetProfile {
+export interface IGetProfiles {
   get: () => Promise<Profile[]>
 }

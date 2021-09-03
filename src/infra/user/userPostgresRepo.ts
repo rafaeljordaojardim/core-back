@@ -1,6 +1,7 @@
 import { ICreateUserRepo } from '../../data/interfaces/createUserRepo'
 import { IGetUserByEmailRepo } from '../../data/interfaces/getUserByEmailRepo'
 import { IGetUserByIdRepo } from '../../data/interfaces/getUserByIdRepo'
+import { IGetUsersFromProfileRepo } from '../../data/interfaces/getUsersFromProfileRepo'
 import { IGetUsersRepo } from '../../data/interfaces/getUsersRepo'
 import { IUpdateUserRepo } from '../../data/interfaces/updateUserRepo'
 import { ActionDb, ProfileDb, SectorDb, UserDb } from '../../db/models'
@@ -8,7 +9,7 @@ import { User } from '../../entities/user'
 import { IUser } from '../../presentation/interfaces/user'
 import { makeGetUserQuery } from '../../utils/common'
 
-export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, IGetUsersRepo, IGetUserByIdRepo, IUpdateUserRepo {
+export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, IGetUsersRepo, IGetUserByIdRepo, IUpdateUserRepo, IGetUsersFromProfileRepo {
   public async update (id: number, body: any): Promise<User | undefined> {
     const [, [userUpdated]] = await UserDb.update({ ...body }, {
       where: { id },
@@ -39,8 +40,8 @@ export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, I
 
   public async getByEmail (email: string): Promise<User | undefined> {
     const query = makeGetUserQuery(email)
-    const [user] = await UserDb.sequelize?.query(query) as User[]
-    if (user != null) {
+    const [user] = await UserDb.sequelize?.query(query) as IUser[]
+    if (user[0] != null) {
       return User.convertFromRawQuery(user[0])
     }
   }
@@ -51,5 +52,10 @@ export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, I
     if (users != null) {
       return users[0].map(user => User.convertFromRawQuery(user))
     }
+  }
+
+  public async getUsersFromProfile (profileId: number): Promise<User[]> {
+    const users = await UserDb.findAll({ where: { profileId } })
+    return users.map((user) => User.convertToReturn(user))
   }
 }

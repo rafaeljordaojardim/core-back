@@ -13,6 +13,11 @@ import { UpdateProfileController } from '../presentation/controllers/profile/upd
 import { ListProfilesController } from '../presentation/controllers/profile/listProfiles'
 import { DBListProfiles } from '../data/profile/dbListProfiles'
 import { IGetProfilesRepo } from '../data/interfaces/getProfilesRepo'
+import { DBListProfilesCustom } from '../data/profile/dbListProfilesCustom'
+import { IGetUsersFromProfileRepo } from '../data/interfaces/getUsersFromProfileRepo'
+import { UserPostgresRepo } from '../infra/user/userPostgresRepo'
+import { IGetActionsFromProfileRepo } from '../data/interfaces/getActionsFromProfile'
+import { ListCustomProfilesController } from '../presentation/controllers/profile/listCustomProfile'
 
 export const makeCreateProfile = (): IController => {
   const createProfileRepo: ICreateProfileRepo = new ProfilePostgresRepo()
@@ -42,4 +47,16 @@ export const makeListProfiles = (): IController => {
   const getProfilesRepo: IGetProfilesRepo = new ProfilePostgresRepo()
   const dbListProfiles = new DBListProfiles(getProfilesRepo)
   return new ListProfilesController(dbListProfiles)
+}
+
+export const makeListCustomProfiles = (): IController => {
+  const getProfilesRepo: IGetProfilesRepo = new ProfilePostgresRepo()
+  const getUsersFromProfile: IGetUsersFromProfileRepo = new UserPostgresRepo()
+  const getActionsFromProfile: IGetActionsFromProfileRepo = new ActionProfilePostgresRepo()
+  const dbListCustomProfiles = new DBListProfilesCustom(
+    getProfilesRepo,
+    getUsersFromProfile,
+    getActionsFromProfile
+  )
+  return new ListCustomProfilesController(dbListCustomProfiles)
 }

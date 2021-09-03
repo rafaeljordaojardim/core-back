@@ -2,7 +2,7 @@ import { ProfileDb } from '../db/models'
 import { Action } from './action'
 
 export class Profile {
-  public id?: number
+  public id: number
   public name: string
   public actions: Action[]
 
