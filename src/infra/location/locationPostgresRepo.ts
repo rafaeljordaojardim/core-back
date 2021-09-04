@@ -4,6 +4,7 @@ import { IUpdateLocationRepo } from '../../data/interfaces/updateLocationRepo'
 import { LocationDb } from '../../db/models'
 import { IUpdateLocationParams } from '../../domain/location/use-cases'
 import { Location } from '../../entities/location'
+import { makeGetLocationQuery } from '../../utils/common'
 import { LoggerThrow } from '../../utils/loggerThrow'
 
 export class LocationPostgresRepo implements ICreateLocationRepo, IGetLocationRepo, IUpdateLocationRepo {
@@ -16,15 +17,16 @@ export class LocationPostgresRepo implements ICreateLocationRepo, IGetLocationRe
   }
 
   public async get (id?: number): Promise<Location | Location[]> {
+    const query = makeGetLocationQuery(id)
     if (id != null) {
-      const location = await LocationDb.findByPk(id)
-      if (location != null) {
-        return Location.convertFromDb(location)
+      const location = await LocationDb.sequelize?.query(query)
+      if (location?.[0][0] != null) {
+        return Location.convertFromDb(location[0][0])
       }
     } else {
-      const locations = await LocationDb.findAll()
-      if (location != null) {
-        return locations.map(Location.convertFromDb)
+      const locations = await LocationDb.sequelize?.query(query)
+      if (locations != null) {
+        return locations[0].map(Location.convertFromDb)
       }
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

@@ -28,6 +28,13 @@ export const badRequest = (message?: string): IResponse => {
   }
 }
 
+export const notFound = (message?: string): IResponse => {
+  return {
+    status: 404,
+    body: { message }
+  }
+}
+
 export const conflict = (message?: string): IResponse => {
   return {
     status: 409,

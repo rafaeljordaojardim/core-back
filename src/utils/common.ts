@@ -8,8 +8,8 @@ export const parseToTableFormat = (items: any[]): any => {
   }))
 }
 
-export const makeGetUserQuery = (email: string = ''): string => {
-  const conditionalPart = email != null ? ` where u.email = '${email}' limit 1` : ''
+export const makeGetUserQuery = (email?: string): string => {
+  const conditionalPart = email != null ? `\nwhere u.email = '${email}' limit 1;` : ''
   const query = `SELECT u.*, 
     pr.name as profile_name, pr.id as profile_id,
     sc.name as sector_name, sc.id as sector_id,
@@ -18,5 +18,12 @@ export const makeGetUserQuery = (email: string = ''): string => {
     INNER JOIN profiles AS pr ON pr.id = u.profile_id
     INNER JOIN sectors AS sc ON sc.id = u.sector_id
     LEFT JOIN users AS us ON us.id = u.boss_id ${conditionalPart}`
+  return query
+}
+
+export const makeGetLocationQuery = (id?: number): string => {
+  const conditionalPart = id != null ? `\nwhere l.id = ${id} limit 1` : ''
+  const query = `SELECT l.id as id, l.name as name, s.name as sector_name from locations AS l 
+  INNER JOIN sectors as s ON s.id = l.sector_id ${conditionalPart}`
   return query
 }
