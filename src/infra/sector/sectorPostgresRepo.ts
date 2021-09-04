@@ -20,7 +20,6 @@ export class SectorPostgresRepo implements IGetSectorByIdRepo, ICreateSectorRepo
     if (sectorFromDb != null) {
       return Sector.convertFromDb(sectorFromDb)
     }
-    LoggerThrow.error(`The Sector id ${id} is not present on database`)
   }
 
   public async getByName (name: string): Promise<Sector | undefined> {
