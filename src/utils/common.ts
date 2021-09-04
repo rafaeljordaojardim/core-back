@@ -1,3 +1,7 @@
+import { ForbiddenError } from '../data/errors'
+import { IResponse } from '../presentation/interfaces/response'
+import { forbidden, serverError } from '../presentation/commons/responses'
+
 export const parseToTableFormat = (items: any[]): any => {
   return items?.map((item) => ({
     data: Object.keys(item).map(userKey => {
@@ -26,4 +30,12 @@ export const makeGetLocationQuery = (id?: number): string => {
   const query = `SELECT l.id as id, l.name as name, s.name as sector_name from locations AS l 
   INNER JOIN sectors as s ON s.id = l.sector_id ${conditionalPart}`
   return query
+}
+
+export const errorProcessor = (error: Error): IResponse => {
+  if (error instanceof ForbiddenError) {
+    return forbidden({ message: error.message })
+  }
+
+  return serverError()
 }

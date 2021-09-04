@@ -7,7 +7,9 @@ import {
   IGetUsersRepo,
   IUpdateUserRepo
 } from '../data/interfaces/'
+import { IUpdateUserPasswordRepo } from '../data/interfaces/updateUserPassword'
 import { DBCreateUser, DBGetUserByEmail, DBGetUsers, DBUpdateUser, FillUserWithAssociations } from '../data/user/'
+import { DBUpdateUserPassword } from '../data/user/dbUpdateUserPassword'
 import { IFillUserWithAssociations } from '../domain/user/use-cases/fillUserWithAssociations'
 import { ProfilePostgresRepo } from '../infra/profile/profilePostgresRepo'
 import { SectorPostgresRepo } from '../infra/sector/sectorPostgresRepo'
@@ -18,6 +20,7 @@ import {
   GetUsersController,
   UpdateUserController
 } from '../presentation/controllers/user'
+import { UpdateUserPasswordController } from '../presentation/controllers/user/updateUserPassword'
 import { IController } from '../presentation/interfaces/controller'
 
 export const makeFillUserWithAssociations = (): IFillUserWithAssociations => {
@@ -54,4 +57,11 @@ export const makeUpdateUser = (): IController => {
   const getUserByEmailRepo: IGetUserByEmailRepo = new UserPostgresRepo()
   const dbGetUserByEmail = new DBGetUserByEmail(getUserByEmailRepo)
   return new UpdateUserController(dbGetUsers, dbGetUserByEmail)
+}
+
+export const makeUpdateUserPassword = (): IController => {
+  const updateUserPasswordRepo: IUpdateUserPasswordRepo = new UserPostgresRepo()
+  const getUserById: IGetUserByIdRepo = new UserPostgresRepo()
+  const dbUpdateUserPassword = new DBUpdateUserPassword(updateUserPasswordRepo, getUserById)
+  return new UpdateUserPasswordController(dbUpdateUserPassword)
 }

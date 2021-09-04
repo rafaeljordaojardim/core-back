@@ -6,7 +6,6 @@ export function updateUserValidator (req: Request, res: Response, next: NextFunc
     const schema = Joi.object({
       firstName: Joi.string().optional(),
       lastName: Joi.string().optional(),
-      email: Joi.string().min(4).max(100).email(),
       status: Joi.boolean(),
       bossId: Joi.number().optional(),
       profileId: Joi.number().optional(),

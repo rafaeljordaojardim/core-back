@@ -14,6 +14,13 @@ export const created = (body?: any): IResponse => {
   }
 }
 
+export const forbidden = (body?: any): IResponse => {
+  return {
+    status: 403,
+    body
+  }
+}
+
 export const serverError = (): IResponse => {
   return {
     status: 500,
@@ -31,6 +38,13 @@ export const badRequest = (message?: string): IResponse => {
 export const notFound = (message?: string): IResponse => {
   return {
     status: 404,
+    body: { message }
+  }
+}
+
+export const noContent = (message?: string): IResponse => {
+  return {
+    status: 204,
     body: { message }
   }
 }

@@ -112,6 +112,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "update password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldPassword\": \"1234567\",\n    \"newPassword\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/users/2/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"2",
+								"password"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -288,6 +320,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get sectors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/sectors/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"sectors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get sectors by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/sectors/1000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"sectors",
+								"1000"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"event": [
@@ -358,6 +434,50 @@
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/locations/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"locations",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get locations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/locations/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"locations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get locations by id",
+					"request": {
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "http://localhost:3000/api/v1/locations/3",
 							"protocol": "http",

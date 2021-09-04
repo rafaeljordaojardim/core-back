@@ -6,6 +6,7 @@ export class User {
   public id?: number
   public name: string
   public firstName: string
+  public password?: string
   public lastName: string
   public email: string
   public status: boolean
@@ -22,6 +23,7 @@ export class User {
   public static fromDbModel (userDb: UserDb): User {
     const user = new User()
     user.id = userDb.id
+    user.password = userDb.password
     user.firstName = userDb.firstName
     user.lastName = userDb.lastName
     user.name = `${user.firstName.trim()} ${user.lastName.trim()}`

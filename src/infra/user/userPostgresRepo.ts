@@ -3,13 +3,18 @@ import { IGetUserByEmailRepo } from '../../data/interfaces/getUserByEmailRepo'
 import { IGetUserByIdRepo } from '../../data/interfaces/getUserByIdRepo'
 import { IGetUsersFromProfileRepo } from '../../data/interfaces/getUsersFromProfileRepo'
 import { IGetUsersRepo } from '../../data/interfaces/getUsersRepo'
+import { IUpdateUserPasswordRepo } from '../../data/interfaces/updateUserPassword'
 import { IUpdateUserRepo } from '../../data/interfaces/updateUserRepo'
 import { ActionDb, ProfileDb, SectorDb, UserDb } from '../../db/models'
 import { User } from '../../entities/user'
 import { IUser } from '../../presentation/interfaces/user'
 import { makeGetUserQuery } from '../../utils/common'
 
-export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, IGetUsersRepo, IGetUserByIdRepo, IUpdateUserRepo, IGetUsersFromProfileRepo {
+export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, IGetUsersRepo, IGetUserByIdRepo, IUpdateUserRepo, IGetUsersFromProfileRepo, IUpdateUserPasswordRepo {
+  public async updatePassword (id: number, newPassword: string): Promise<void> {
+    await UserDb.update({ password: newPassword }, { where: { id } })
+  }
+
   public async update (id: number, body: any): Promise<User | undefined> {
     const [, [userUpdated]] = await UserDb.update({ ...body }, {
       where: { id },
