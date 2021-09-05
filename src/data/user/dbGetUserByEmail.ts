@@ -8,7 +8,7 @@ export class DBGetUserByEmail implements IGetUserByEmail {
   ) {}
 
   public async get (email: string): Promise<User | undefined> {
-    const user = await this.getUserByEmail.getByEmail(email)
+    const user = await this.getUserByEmail.getByEmail(email, false)
     return user
   }
 }

@@ -7,6 +7,7 @@ import {
   makeUpdateUserPassword
 } from '../factories/user'
 import { createUserValidator, updateUserValidator, updateUserPasswordValidator } from '../presentation/validators'
+import { authorizer } from '../utils/middleware/authorizer'
 
 const router = Router()
 
@@ -22,19 +23,19 @@ router.get('/:email', async (req, res) => {
   return res.json(response?.body)
 })
 
-router.get('/', async (req, res) => {
+router.get('/', authorizer, async (req, res) => {
   const response = await makeGetUsers().handle(req, res)
   res.statusCode = response.status
   return res.json(response?.body)
 })
 
-router.patch('/:id', updateUserValidator, async (req, res) => {
+router.patch('/:id', authorizer, updateUserValidator, async (req, res) => {
   const response = await makeUpdateUser().handle(req, res)
   res.statusCode = response.status
   return res.json(response?.body)
 })
 
-router.patch('/:id/password', updateUserPasswordValidator, async (req, res) => {
+router.patch('/:id/password', authorizer, updateUserPasswordValidator, async (req, res) => {
   const response = await makeUpdateUserPassword().handle(req, res)
   res.statusCode = response.status
   return res.json(response?.body)

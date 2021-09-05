@@ -1,28 +1,29 @@
 import { Router } from 'express'
 import { makeCreateLocation, makeGetLocations, makeUpdateLocation } from '../factories/location'
 import { createLocationValidator, updateLocationValidator } from '../presentation/validators/'
+import { authorizer } from '../utils/middleware/authorizer'
 
 const router = Router()
 
-router.post('/', createLocationValidator, async (req, res, next) => {
+router.post('/', authorizer, createLocationValidator, async (req, res, next) => {
   const response = await makeCreateLocation().handle(req, res)
   res.statusCode = response.status
   return res.json(response?.body)
 })
 
-router.patch('/:id', updateLocationValidator, async (req, res, next) => {
+router.patch('/:id', authorizer, updateLocationValidator, async (req, res, next) => {
   const response = await makeUpdateLocation().handle(req, res)
   res.statusCode = response.status
   return res.json(response?.body)
 })
 
-router.get('/', updateLocationValidator, async (req, res, next) => {
+router.get('/', authorizer, async (req, res, next) => {
   const response = await makeGetLocations().handle(req, res)
   res.statusCode = response.status
   return res.json(response?.body)
 })
 
-router.get('/:id', updateLocationValidator, async (req, res, next) => {
+router.get('/:id', authorizer, updateLocationValidator, async (req, res, next) => {
   const response = await makeGetLocations().handle(req, res)
   res.statusCode = response.status
   return res.json(response?.body)

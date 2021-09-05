@@ -43,11 +43,11 @@ export class UserPostgresRepo implements ICreateUserRepo, IGetUserByEmailRepo, I
     return User.fromDbModel(userCreated)
   }
 
-  public async getByEmail (email: string): Promise<User | undefined> {
+  public async getByEmail (email: string, sensitiveInfo = false): Promise<User | undefined> {
     const query = makeGetUserQuery(email)
     const [user] = await UserDb.sequelize?.query(query) as IUser[]
     if (user[0] != null) {
-      return User.convertFromRawQuery(user[0])
+      return User.convertFromRawQuery(user[0], sensitiveInfo)
     }
   }
 

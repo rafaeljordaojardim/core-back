@@ -10,3 +10,9 @@ export class NotFoundError extends Error {
     super(message)
   }
 }
+
+export class UnauthorizedError extends Error {
+  constructor (message = 'Unauthorized') {
+    super(message)
+  }
+}

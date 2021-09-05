@@ -2,11 +2,15 @@
 import express from 'express'
 import Routers from './routes'
 import { init } from './db/models/database'
-import bodyParser from 'body-parser'
+import cors from 'cors'
 const app = express()
-const port = 3000
+const port = (process.env.PORT != null) ? process.env.PORT : 3000
+const corsConfig = {
+  origin: '*'
+}
 const sequelize = init()
-app.use(bodyParser.json())
+app.use(cors(corsConfig))
+app.use(express.json())
 app.use('/api', Routers)
 
 // eslint-disable-next-line no-void

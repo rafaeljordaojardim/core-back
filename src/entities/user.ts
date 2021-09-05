@@ -10,7 +10,7 @@ export class User {
   public lastName: string
   public email: string
   public status: boolean
-  public profileId?: number
+  public profileId: number
   public sectorId?: number
   public bossId?: number
   public sector?: Sector
@@ -54,10 +54,14 @@ export class User {
     return boss
   }
 
-  public static convertFromRawQuery (row: any): User {
+  public static convertFromRawQuery (row: any, sensitiveInfo = false): User {
     const user = new User()
     if (row.profile_name != null) {
       user.profileName = row.profile_name
+    }
+
+    if (sensitiveInfo && row.password != null) {
+      user.password = row.password
     }
 
     if (row.first_name != null) {

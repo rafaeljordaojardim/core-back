@@ -21,6 +21,13 @@ export const forbidden = (body?: any): IResponse => {
   }
 }
 
+export const unauthorized = (body?: any): IResponse => {
+  return {
+    status: 401,
+    body
+  }
+}
+
 export const serverError = (): IResponse => {
   return {
     status: 500,

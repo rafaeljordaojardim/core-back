@@ -1,6 +1,6 @@
-import { ForbiddenError } from '../data/errors'
+import { ForbiddenError, NotFoundError, UnauthorizedError } from '../data/errors'
 import { IResponse } from '../presentation/interfaces/response'
-import { forbidden, serverError } from '../presentation/commons/responses'
+import { forbidden, notFound, serverError, unauthorized } from '../presentation/commons/responses'
 
 export const parseToTableFormat = (items: any[]): any => {
   return items?.map((item) => ({
@@ -35,6 +35,14 @@ export const makeGetLocationQuery = (id?: number): string => {
 export const errorProcessor = (error: Error): IResponse => {
   if (error instanceof ForbiddenError) {
     return forbidden({ message: error.message })
+  }
+
+  if (error instanceof NotFoundError) {
+    return notFound(error.message)
+  }
+
+  if (error instanceof UnauthorizedError) {
+    return unauthorized({ message: error.message })
   }
 
   return serverError()

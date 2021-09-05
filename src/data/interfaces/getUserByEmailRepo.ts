@@ -1,5 +1,5 @@
 import { User } from '../../entities/user'
 
 export interface IGetUserByEmailRepo {
-  getByEmail: (email: string) => Promise<User | undefined>
+  getByEmail: (email: string, sensitiveInfo: boolean) => Promise<User | undefined>
 }
