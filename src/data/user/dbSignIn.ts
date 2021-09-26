@@ -20,6 +20,7 @@ export class DBSignInUser implements ISignIn {
     }
     const actions = await this.getActionsByProfileId.getActionsFromProfile(user?.profileId)
     return this.generateToken.generate(email, {
+      name: user.firstName + ' ' + user.lastName,
       profileId: user.profileId,
       actions: actions.map(action => ({ name: action.actionName, number: action.actionNumber }))
     })
